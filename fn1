@@ -1,0 +1,18 @@
+CREATE FUNCTION dbo.fn_dynamicservice 
+(
+    @sitelist VARCHAR(MAX)
+)
+RETURNS @ret TABLE 
+(
+    siteid INT
+)
+AS 
+BEGIN
+    -- Assuming dbo.splitdelimitedstring function splits the input string and returns a table with a column named 'value'
+    INSERT INTO @ret (siteid)
+    SELECT DISTINCT value 
+    FROM dbo.splitdelimitedstring(@sitelist, ',') -- Corrected: moved the delimiter ',' inside the function call
+
+    RETURN;
+END;
+GO
